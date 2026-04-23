@@ -2,7 +2,6 @@
 
 Cellular automaton that simulates forest fire propagation on a 2D grid, seeded with real satellite hotspot data from NASA FIRMS and parallelized with MPI via `mpi4py`. Runs inside Docker.
 
----
 
 ## Setup
 
@@ -18,7 +17,7 @@ docker build -t fire-ca-mpi .
 FIRMS_API_KEY=your_key_here
 ```
 
----
+
 
 ## Usage
 
@@ -30,7 +29,7 @@ python run_all.py
 
 On macOS use `python3` if needed. Results are saved to `results/`.
 
----
+
 
 ## Performance
 
