@@ -8,7 +8,7 @@ Cellular automaton that simulates forest fire propagation on a 2D grid, seeded w
 1. Build the Docker image:
 
 ```bash
-docker build -t fire-ca-mpi .
+docker build -t proyecto-hpc .
 ```
 
 2. Add your NASA FIRMS API key to `.env`:
