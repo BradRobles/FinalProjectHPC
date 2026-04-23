@@ -1,92 +1,56 @@
-# Exercise 1: Matrix Multiplication Optimization and HPC Patterns
+# <img src="https://slackmojis.com/emojis/55973-digital_rain_matrix/download" width="25"/> Exercise 1 — Matrix Multiplication
 
-High-performance matrix multiplication using serial, multiprocessing, and MPI approaches, with support for sparse matrices and Strassen optimization. Runs inside Docker.
+Implements and benchmarks serial and parallel strategies for dense matrix multiplication, plus a sparse matrix analysis module. All experiments run inside a Docker container (`proyecto-hpc`) for full reproducibility.
 
-## Setup
+The serial baseline uses a naive O(n³) triple loop. Parallel variants partition the work using row, column, or block decomposition (Python `multiprocessing`), distributed computation via MPI, and the Strassen divide-and-conquer algorithm. A separate script (`sparse_experiments.py`) analyzes real-world sparse matrices in CSR format, examining load imbalance across row partitions.
 
-Build the Docker image:
+## Results
 
-``` bash
-docker build -t proyecto-hpc
-```
+### Baseline — Serial (dense, O(n³))
 
-## Usage
+| Size | Time (s) |
+|---|---|
+| 64 × 64 | 0.0563 |
+| 128 × 128 | 0.3238 |
+| 256 × 256 | 2.5880 |
 
-Run all experiments:
+### Multiprocessing — Partition Strategies (512 × 512)
 
-``` bash
-python exercise_1/run_all.py
-```
+| Partition Method | Workers | Time (s) |
+|---|---|---|
+| Rows | 10 | 0.2102 |
+| Columns | 10 | 0.1425 |
+| Blocks (2D) | 9 | 0.2075 |
 
-Includes:
+Column partitioning outperforms rows due to better cache locality — sequential memory access maximizes cache hit rate and reduces costly RAM reads.
 
--Serial baseline (O(n³))
--Multiprocessing (row, column, 2D block)
--MPI (distributed with mpi4py)
--Strassen algorithm (hybrid)
--Sparse matrix analysis
+### MPI Distributed (512 × 512, 4 processes)
 
-## Environment
+| Time (s) |
+|---|
+| 0.0041 |
 
-Docker-based setup with:
+The low time reflects MPI's use of shared memory (`/dev/shm`) when all processes run on the same node, bypassing network overhead entirely.
 
-Python 3.10 (slim)
-OpenMPI (openmpi-bin, libopenmpi-dev)
-Build tools (build-essential)
+### Strassen vs. NumPy Baseline (512 × 512)
 
-MPI execution as root enabled via:
+| Method | Recursive Threshold | Time (s) |
+|---|---|---|
+| Pure Strassen | 16 | 0.0927 |
+| Hybrid Strassen | 128 | 0.0034 |
+| NumPy Baseline | — | 0.0013 |
 
-``` bash
-OMPI_ALLOW_RUN_AS_ROOT=1
-OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
-```
+The hybrid variant is ~27x faster than pure Strassen by stopping recursion at 128×128 blocks, avoiding Python call stack overhead. Even so, it cannot match NumPy's native C/BLAS implementation.
 
-Performance
+### Sparse Matrix Analysis (CSR format, 4 workers)
 
+| Matrix | Domain | Sparsity (%) | CSR Time (s) |
+|---|---|---|---|
+| `bcspwr08` | Power network | 99.77 | 0.0004 |
+| `bcsstk18` | Structural engineering | 99.90 | 0.0131 |
 
-### Baseline Serial Multiplication
-| Size (n × n) | Execution Time (s) | Correctness |
-| ------------ | ------------------ | ----------- |
-| 64           | 0.0563             | True        |
-| 128          | 0.3238             | True        |
-| 256          | 2.5880             | True        |
+Static row-based load division exposes significant imbalance: Worker 0 receives ~20.9% of non-zero operations while Worker 2 carries ~26.8%, a ~6% gap that bottlenecks the entire parallel execution.
 
-### Multiprocessing Performance (512 × 512)
-| Partition Method | Workers | Execution Time (s) |
-| ---------------- | ------- | ------------------ |
-| Rows             | 10      | 0.2102             |
-| Columns          | 10      | 0.1425             |
-| Blocks (2D)      | 9       | 0.2075             |
+---
 
-### Distributed Memory (MPI)
-| Size      | Workers | Execution Time (s) |
-| --------- | ------- | ------------------ |
-| 512 × 512 | 4       | 0.0041             |
-
-### Strassen vs Baseline (512 × 512)
-| Method          | Threshold | Time (s) |
-| --------------- | --------- | -------- |
-| Pure Strassen   | 16        | 0.0927   |
-| Hybrid Strassen | 128       | 0.0034   |
-| NumPy Baseline  | N/A       | 0.0013   |
-
-### Sparse Matrix Analysis
-| Matrix   | Source         | Sparsity (%) | Time (s) |
-| -------- | -------------- | ------------ | -------- |
-| bcspwr08 | Power Network  | 99.77        | 0.0004   |
-| bcsstk18 | Structural Eng | 99.90        | 0.0131   |
-
-
-## Data
-
-Sparse matrices in Matrix Market format (UF Collection), e.g.:
-
--Structural stiffness matrices
--Power network graphs
-
-## Key Concepts
-1. Speedup & efficiency
-2. Parallel decomposition
-3. MPI communication (bcast, scatter, gather)
-4. Load balancing (sparse data)
-5. Algorithmic optimization (Strassen)
+For further details, see the full report at `docs/report.pdf`.

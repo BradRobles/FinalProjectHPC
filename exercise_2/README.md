@@ -1,58 +1,37 @@
-# Exercise 2: Parallel Cell Morphology Analysis (Multiprocessing + Bioimaging)
+# <img src="https://slackmojis.com/emojis/52843-bacteria/download" width="25"/> Exercise 2 — Cell Morphology Analysis
 
-Pipeline for analyzing cell morphology from microscopy images using serial and parallel processing. Uses real biological data and runs inside Docker.
+Segments and measures cell morphology across the **DIC-C2DH-HeLa** time-lapse microscopy dataset (10 TIFF frames, physical resolution 0.19 µm/px) using the **Cellpose** deep learning model (v4.0.1+). Metrics extracted per frame include detected cell count, average and standard deviation of cell area (µm²), and average major and minor axis lengths (µm).
 
-## Setup
+The serial baseline processes frames sequentially. The parallel version distributes frames across workers using Python `multiprocessing`. A key adaptation was required for Docker on Apple Silicon: the multiprocessing context was explicitly set to `spawn` instead of `fork` to prevent deadlocks when multiple workers load the 1.15 GB Cellpose model concurrently.
 
-Build the Docker image:
+## Results
 
-``` bash
-docker build -t proyecto-hpc .
-```
+### Performance
 
-## Usage
+| Implementation | Workers | Time (s) | Speedup |
+|---|---|---|---|
+| Serial | 1 | 246.28 | 1.00x |
+| Parallel | 2 | 298.58 | 0.82x |
 
-Run the full pipeline:
+Speedup < 1 is expected here. Each spawned worker independently loads the full 1.15 GB neural network into memory, creating a memory bandwidth bottleneck that overwhelms the gain from parallelism across only 10 images. With a dataset of ~1,000 images, initialization overhead would be diluted and speedup would approach theoretical expectations.
 
-``` bash
-python exercise_2/run_all.py
-```
+### Morphology Summary (`morphology_summary.csv`)
 
-This will:
+| Image | Detected Cells | Avg Area (µm²) | Std Area (µm²) | Avg Major Axis (µm) | Avg Minor Axis (µm) |
+|---|---|---|---|---|---|
+| t000.tif | 12 | 371.62 | 189.11 | 28.69 | 16.49 |
+| t001.tif | 8 | 415.43 | 105.25 | 29.95 | 18.45 |
+| t002.tif | 11 | 337.52 | 211.55 | 26.99 | 14.81 |
+| t003.tif | 9 | 346.13 | 200.25 | 26.79 | 16.30 |
+| t004.tif | 12 | 403.53 | 196.81 | 29.41 | 17.15 |
+| t005.tif | 18 | 186.62 | 228.23 | 16.79 | 9.22 |
+| t006.tif | 12 | 442.53 | 196.25 | 32.99 | 17.43 |
+| t007.tif | 12 | 426.53 | 182.32 | 31.60 | 17.43 |
+| t008.tif | 12 | 420.65 | 175.29 | 32.59 | 16.94 |
+| t009.tif | 13 | 353.95 | 191.96 | 27.43 | 15.89 |
 
--Download and extract the dataset
--Inspect image metadata
--Run serial analysis
--Run parallel analysis (multiprocessing)
--Save results to exercise_2/results/
+Average cell area ranges between 337–442 µm², consistent with the known physical resolution of the HeLa dataset.
 
-## Data
+---
 
-Dataset: DIC-C2DH-HeLa (Cell Tracking Challenge)
-
-Format: TIFF microscopy images
-Resolution: ~0.19 µm/px
-Content: HeLa cells for segmentation and tracking
-Processing
-
-Results (Example)
-
-| Image | Cells	| Avg Area (µm²) | Avg Major Axis (µm)|
-|:----|:------|:----|:-----|
-|t000|12|371.62|28.69|
-|t005|18|186.62|16.79|
-|t009|13|353.95|27.43|
-
-Performance
-
-| Mode | Workers | Time (s) | Speedup|
-|:----|:------|:----|:-----|
-|Serial|1|246.28|1.00x|
-|Parallel|2|298.58|0.82x|
-
-## Key Concepts
-1. Image processing pipelines
-2. Morphological feature extraction
-3. Parallelization with multiprocessing
-4. Speedup evaluation
-5. Real-world bioimage data analysis
+For further details, see the full report at `docs/report.pdf`.

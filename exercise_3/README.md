@@ -1,44 +1,38 @@
-# Exercise 3: Parallel Forest Fire Cellular Automaton (MPI + NASA FIRMS)
+# <img src="https://slackmojis.com/emojis/49-fireball/download" width="25"/> Exercise 3 — Forest Fire Simulation
 
-Cellular automaton that simulates forest fire propagation on a 2D grid, seeded with real satellite hotspot data from NASA FIRMS and parallelized with MPI via `mpi4py`. Runs inside Docker.
+Models forest fire spread as a cellular automaton on a 2D grid, seeded with real satellite hotspot data from the NASA FIRMS API (VIIRS\_NOAA20\_NRT instrument). The simulation covers a region in West Africa (Mauritania, Mali, and Senegal), using 768 hotspot detections over a two-day window as initial ignition points.
 
+Each cell holds one of four states: empty (0), vegetation (1), burning (2), or burned (3). At each time step, a burning cell can ignite any of its 8 neighbors (Moore neighborhood) with probability p = 0.45, then transitions to burned.
 
-## Setup
+The serial baseline iterates over the full grid sequentially. The parallel version uses MPI row-based domain decomposition — the grid is split into horizontal strips per process, with ghost row exchange via `MPI.Sendrecv` at every step to maintain boundary consistency.
 
-1. Build the Docker image:
+Results are visualized as a frame-by-frame animation and a final state map.
 
-```bash
-docker build -t proyecto-hpc .
-```
+## Model Parameters
 
-2. Add your NASA FIRMS API key to `.env`:
+| Parameter | Value |
+|---|---|
+| Grid sizes tested | 500×500, 1000×1000, 1500×1500 |
+| Time steps | 150 |
+| Spread probability | 0.45 |
+| Neighborhood | Moore (8 neighbors) |
+| Data source | VIIRS\_NOAA20\_NRT — 768 hotspots |
+| Region | West Africa [18°N–28°N, 14°W–4°W] |
 
-```
-FIRMS_API_KEY=your_key_here
-```
+## Results
 
+| Implementation | Grid | Processes | Time (s) | Speedup |
+|---|---|---|---|---|
+| Serial | 1500 × 1500 | 1 | 4.46 | 1.00x |
+| MPI | 1500 × 1500 | 2 | 3.23 | 1.38x |
+| MPI | 1500 × 1500 | 4 | 2.04 | 2.19x |
 
+Sub-linear speedup is expected due to ghost row communication overhead between processes.
 
-## Usage
+## Simulation Output
 
-Run the full pipeline (serial + parallel):
+![Forest Fire Simulation](results/fire_simulation.gif)
 
-```bash
-python run_all.py
-```
+---
 
-On macOS use `python3` if needed. Results are saved to `results/`.
-
-
-
-## Performance
-
-| Method | Grid Size | Processes | Time (s) |
-|---|---|---|---|
-| Serial | 500x500 | 1 | 0.42 |
-| Serial | 1000x1000 | 1 | 1.92 |
-| Serial | 1500x1500 | 1 | 4.46 |
-| MPI | 1500x1500 | 2 | 3.23 |
-| MPI | 1500x1500 | 4 | 2.04 |
-
-Speedup with 4 processes on a 1500x1500 grid: **2.19x**
+For further details, see the full report at `docs/report.pdf`.
