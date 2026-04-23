@@ -1,4 +1,4 @@
-# High-Performance Computing: Final Project
+# Evaluating Activity 3 - Parallel Programming Application
 
 ## Objective
 
