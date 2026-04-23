@@ -1,4 +1,27 @@
-# Evaluating Activity 3 — Parallel Programming Applications
+# Evaluating Activity 3 - Parallel Programming Application
+
+## Objective
+
+This repository contains the final project for the High-Performance Computing (HPC) course. The objective is to implement, evaluate, and compare serial and parallel computational strategies across data engineering and machine learning workloads.
+
+*The project explores:*
+
+-Shared memory parallelism (Python Multiprocessing)
+-Distributed memory (OpenMPI with mpi4py)
+
+with a focus on performance, scalability, and efficiency.
+
+Team Members:
+
+1. *Karen Cardiel Olea 2209039*
+2. *Jorge Ramiro Chay Koyoc 2309052*
+3. *Angeles Alejandra Cruz Legorreta 2309064*
+4. *Diego Jesus Loria Campos 2309140*
+6. *Brad Robles Garcia 2309198*
+7. *Elisabet Arelly Sulu Vela 2309212*
+
+Institution: Universidad Politécnica de Yucatán (UPY)
+>>>>>>> 9de71c2842455ca2d2cc87511cf3dc463d1e9102
 
 
 ## ▷ Objective
@@ -173,6 +196,7 @@ python exercise_3/run_all.py
 **Parallel:** `exercise_4/kmeans_parallel.py` — MPI with `Scatterv`, `Gatherv`, `Allreduce`, `Broadcast`
 
 ```bash
+<<<<<<< HEAD
 python exercise_4/run_all.py
 ```
 
@@ -187,3 +211,6 @@ python exercise_4/run_all.py
 ## ▷ Full Report
 
 Methodology, analysis, and conclusions: `docs/report.pdf`
+=======
+docs/report.pdf
+```
