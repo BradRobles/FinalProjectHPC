@@ -4,7 +4,7 @@ Implements K-Means clustering on the **Covertype dataset** (581,012 samples, 54 
 
 The parallel version distributes samples across processes using `Scatterv` (handling uneven splits gracefully), performs local distance computations on each partition, and synchronizes cluster centroids globally via `Allreduce` at every iteration — avoiding the idle time of a centralized `Gather + Bcast` approach. Final labels are collected on rank 0 via `Gatherv`.
 
-## Results
+## ▷ Results
 
 ### K = 7
 
