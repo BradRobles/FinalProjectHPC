@@ -34,13 +34,17 @@ Dataset: Covertype (Forest Cover Type)
 7 classes (forest cover types)
 
 
-Performance (Example)
-| Mode | Processes | K | Time (s) | Speedup |
-|:----|:------|:----|:-----|:-----|
-|Serial|1|7|12.5|1.00|
-|MPI|2|7|7.1|1.76|
-|MPI|4|7|4.3|2.90|
-|MPI|4|10|5.0|2.50|
+Performance
+
+| K  | Mode    | Iterations | Total Time (s) | Time/Iter (s) | Speedup |
+| -- | ------- | ---------- | -------------- | ------------- | ------- |
+| 7  | Serial  | 50         | 245.38         | 4.90          | 1.00x   |
+| 7  | MPI (1) | 8          | 48.17          | 6.02          | 5.09x*  |
+| 7  | MPI (2) | 4          | 18.41          | 4.60          | 13.32x* |
+| 7  | MPI (4) | 11         | 74.85          | 6.80          | 3.27x   |
+| 10 | MPI (1) | 15         | 134.93         | 8.99          | 1.81x   |
+| 10 | MPI (4) | 18         | 131.50         | 7.30          | 1.86x   |
+
 
 ## Key Concepts
 1. Distributed clustering (MPI)
