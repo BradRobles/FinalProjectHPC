@@ -41,16 +41,41 @@ OMPI_ALLOW_RUN_AS_ROOT=1
 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
 ```
 
-Performance (Example)
+Performance
 
-| Method | Size | Processes | Time (s) |
-|:----|:------|:----|:-----|
-|Serial|1000x1000|1|2.10|
-|MP (2D Block)|1000x1000|4|0.62|
-|MPI|1500x1500|4|1.95|
-|Strassen|1500x1500|1|1.40|
 
-Speedup (MPI, 4 processes): ~2.1x
+### Baseline Serial Multiplication
+| Size (n × n) | Execution Time (s) | Correctness |
+| ------------ | ------------------ | ----------- |
+| 64           | 0.0563             | True        |
+| 128          | 0.3238             | True        |
+| 256          | 2.5880             | True        |
+
+### Multiprocessing Performance (512 × 512)
+| Partition Method | Workers | Execution Time (s) |
+| ---------------- | ------- | ------------------ |
+| Rows             | 10      | 0.2102             |
+| Columns          | 10      | 0.1425             |
+| Blocks (2D)      | 9       | 0.2075             |
+
+### Distributed Memory (MPI)
+| Size      | Workers | Execution Time (s) |
+| --------- | ------- | ------------------ |
+| 512 × 512 | 4       | 0.0041             |
+
+### Strassen vs Baseline (512 × 512)
+| Method          | Threshold | Time (s) |
+| --------------- | --------- | -------- |
+| Pure Strassen   | 16        | 0.0927   |
+| Hybrid Strassen | 128       | 0.0034   |
+| NumPy Baseline  | N/A       | 0.0013   |
+
+### Sparse Matrix Analysis
+| Matrix   | Source         | Sparsity (%) | Time (s) |
+| -------- | -------------- | ------------ | -------- |
+| bcspwr08 | Power Network  | 99.77        | 0.0004   |
+| bcsstk18 | Structural Eng | 99.90        | 0.0131   |
+
 
 ## Data
 
