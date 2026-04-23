@@ -1,4 +1,4 @@
-# <img src="https://slackmojis.com/emojis/52157-laptop/download" width="30"/> Evaluating Activity 3 — Parallel Programming Applications
+# <img src="https://slackmojis.com/emojis/52157-laptop/download" width="40"/> Evaluating Activity 3 — Parallel Programming Applications
 
 Benchmarks of serial and parallel computational strategies across four workloads — matrix multiplication, cell morphology analysis, forest fire simulation, and distributed clustering — using Python multiprocessing and OpenMPI.
 
