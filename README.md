@@ -1,28 +1,4 @@
-# Evaluating Activity 3 - Parallel Programming Application
-
-## Objective
-
-This repository contains the final project for the High-Performance Computing (HPC) course. The objective is to implement, evaluate, and compare serial and parallel computational strategies across data engineering and machine learning workloads.
-
-*The project explores:*
-
--Shared memory parallelism (Python Multiprocessing)
--Distributed memory (OpenMPI with mpi4py)
-
-with a focus on performance, scalability, and efficiency.
-
-Team Members:
-
-1. *Karen Cardiel Olea 2209039*
-2. *Jorge Ramiro Chay Koyoc 2309052*
-3. *Angeles Alejandra Cruz Legorreta 2309064*
-4. *Diego Jesus Loria Campos 2309140*
-6. *Brad Robles Garcia 2309198*
-7. *Elisabet Arelly Sulu Vela 2309212*
-
-Institution: Universidad Politécnica de Yucatán (UPY)
->>>>>>> 9de71c2842455ca2d2cc87511cf3dc463d1e9102
-
+# Evaluating Activity 3 — Parallel Programming Applications
 
 ## ▷ Objective
 
@@ -32,6 +8,7 @@ This assignment implements and evaluates serial and parallel computational strat
 - **Distributed memory** — OpenMPI with `mpi4py`
 
 Each exercise provides a serial baseline and one or more parallel implementations so both approaches can be directly compared under the same conditions.
+
 
 ## ▷ Repository Structure
 
@@ -94,6 +71,8 @@ FinalProjectHPC/
 └── README.md
 ```
 
+
+
 ## ▷ How to Compare Serial vs Parallel
 
 Each exercise follows the same structure: a serial baseline file and one or more parallel implementations, all runnable through a single `run_all.py` that executes both versions and prints timing results side by side.
@@ -112,6 +91,8 @@ python exercise_X/run_all.py   # replace X with 1, 2, 3, or 4
 ```
 
 This runs the serial baseline first, then each parallel variant, and outputs execution times and speedup for direct comparison.
+
+
 
 ## ▷ Requirements & Setup
 
@@ -138,11 +119,12 @@ Exercise 2 requires downloading the dataset first:
 python exercise_2/download_data.py
 ```
 
-##  <img src="https://slackmojis.com/emojis/55973-digital_rain_matrix/download" width="25"/> Exercise 1 — Matrix Multiplication
+
+## <img src="https://slackmojis.com/emojis/55973-digital_rain_matrix/download" width="25"/> Exercise 1 — Matrix Multiplication
 
 **Baseline:** `exercise_1/src/baseline.py` — naive O(n³) triple loop  
 **Parallel:** `src/parallel_mp.py`, `src/parallel_mp2.py` (Multiprocessing) · `src/parallel_mpi.py` (MPI) · `src/strassen.py` (Strassen)  
-**Additional:** `src/sparse_experiments.py` — standalone analysis of sparse matrices (CSR format via scipy) and load imbalance across row partitions; run independently with `python exercise_1/src/sparse_experiments.py`  
+**Additional:** `src/sparse_experiments.py` — standalone analysis of sparse matrices (CSR format via scipy) and load imbalance across row partitions; run independently with `python exercise_1/src/sparse_experiments.py`
 
 ```bash
 python exercise_1/run_all.py
@@ -190,13 +172,13 @@ python exercise_3/run_all.py
 | MPI | 1500 × 1500 | 4 | 2.04 | 2.19x |
 
 
+
 ## <img src="https://slackmojis.com/emojis/28601-laptop/download" width="25"/> Exercise 4 — Distributed K-Means
 
 **Baseline:** `exercise_4/kmeans_serial.py`  
 **Parallel:** `exercise_4/kmeans_parallel.py` — MPI with `Scatterv`, `Gatherv`, `Allreduce`, `Broadcast`
 
 ```bash
-<<<<<<< HEAD
 python exercise_4/run_all.py
 ```
 
@@ -208,9 +190,7 @@ python exercise_4/run_all.py
 | MPI | 4 | 7 | 11 | 74.85 | 3.27x |
 
 
+
 ## ▷ Full Report
 
 Methodology, analysis, and conclusions: `docs/report.pdf`
-=======
-docs/report.pdf
-```
