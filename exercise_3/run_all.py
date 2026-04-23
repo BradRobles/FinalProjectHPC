@@ -25,7 +25,7 @@ def main():
     current_dir = os.getcwd()
     project_root = os.path.abspath(current_dir)
 
-    image = "fire-ca-mpi"
+    image = "proyecto-hpc"
 
     docker_base = f'docker run --rm -v "{project_root}:/app" -w /app {image}'
 
