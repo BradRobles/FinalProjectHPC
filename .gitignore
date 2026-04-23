@@ -1,0 +1,12 @@
+# Environment
+exercise_3/.env
+
+# Python cache
+exercise_3/src/__pycache__/
+*.py[cod]
+
+# Mac
+.DS_Store
+
+# Results (frames de simulación)
+exercise_3/results/frames/
