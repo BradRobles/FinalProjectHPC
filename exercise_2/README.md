@@ -43,12 +43,12 @@ Results (Example)
 |t005|18|186.62|16.79|
 |t009|13|353.95|27.43|
 
-Performance (Example)
+Performance
 
 | Mode | Workers | Time (s) | Speedup|
 |:----|:------|:----|:-----|
-|Serial|1|2.50|1.00|
-|Parallel|2|1.60|1.56|
+|Serial|1|246.28|1.00x|
+|Parallel|2|298.58|0.82x|
 
 ## Key Concepts
 1. Image processing pipelines
