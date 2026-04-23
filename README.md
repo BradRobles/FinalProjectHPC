@@ -98,11 +98,38 @@ Efficient matrix multiplication using:
 *Strassen algorithm
 *Performance (Example)
 
-| Method | Size | Processes | Time (s) |
-|:----|:------|:----|:-----|
-|Serial|1000x1000|1|2.10|
-|MP (2D)|1000x1000|4|0.62|
-|MPI|1500x1500|4|1.95|
+### Baseline Serial Multiplication
+| Size (n × n) | Execution Time (s) | Correctness |
+| ------------ | ------------------ | ----------- |
+| 64           | 0.0563             | True        |
+| 128          | 0.3238             | True        |
+| 256          | 2.5880             | True        |
+
+### Multiprocessing Performance (512 × 512)
+| Partition Method | Workers | Execution Time (s) |
+| ---------------- | ------- | ------------------ |
+| Rows             | 10      | 0.2102             |
+| Columns          | 10      | 0.1425             |
+| Blocks (2D)      | 9       | 0.2075             |
+
+### Distributed Memory (MPI)
+| Size      | Workers | Execution Time (s) |
+| --------- | ------- | ------------------ |
+| 512 × 512 | 4       | 0.0041             |
+
+### Strassen vs Baseline (512 × 512)
+| Method          | Threshold | Time (s) |
+| --------------- | --------- | -------- |
+| Pure Strassen   | 16        | 0.0927   |
+| Hybrid Strassen | 128       | 0.0034   |
+| NumPy Baseline  | N/A       | 0.0013   |
+
+### Sparse Matrix Analysis
+| Matrix   | Source         | Sparsity (%) | Time (s) |
+| -------- | -------------- | ------------ | -------- |
+| bcspwr08 | Power Network  | 99.77        | 0.0004   |
+| bcsstk18 | Structural Eng | 99.90        | 0.0131   |
+
 
 ## *Exercise 2: Parallel Cell Morphology Analysis*
 
@@ -113,12 +140,12 @@ Bioimage processing pipeline using microscopy data.
 -Cell count
 -Area
 -Morphological features
--Performance (Example)
+-Performance
 
-| Mode | Workers | Time (s) | Speedup |
+| Mode | Workers | Time (s) | Speedup|
 |:----|:------|:----|:-----|
-|Serial|1|2.50|1.00|
-|Parallel|2|1.60|1.56|
+|Serial|1|246.28|1.00x|
+|Parallel|2|298.58|0.82x|
 
 ## *Exercise 3: Forest Fire Simulation (MPI)*
 
@@ -161,10 +188,14 @@ Clustering using Covertype dataset (~580k samples, 54 features).
 -Broadcast
 -Performance (Example)
 
-| Mode | Processes | K | Time (s) | Speedup |
-|:----|:------|:----|:-----|:-----|
-|Serial|1|7|12.5|1.00|
-|MPI|4|7|4.3|2.90|
+| K  | Mode    | Iterations | Total Time (s) | Time/Iter (s) | Speedup |
+| -- | ------- | ---------- | -------------- | ------------- | ------- |
+| 7  | Serial  | 50         | 245.38         | 4.90          | 1.00x   |
+| 7  | MPI (1) | 8          | 48.17          | 6.02          | 5.09x*  |
+| 7  | MPI (2) | 4          | 18.41          | 4.60          | 13.32x* |
+| 7  | MPI (4) | 11         | 74.85          | 6.80          | 3.27x   |
+| 10 | MPI (1) | 15         | 134.93         | 8.99          | 1.81x   |
+| 10 | MPI (4) | 18         | 131.50         | 7.30          | 1.86x   |
 
 # Key HPC Concepts
 1. Speedup & efficiency
