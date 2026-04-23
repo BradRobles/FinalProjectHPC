@@ -13,12 +13,12 @@ with a focus on performance, scalability, and efficiency.
 
 Team Members:
 
-1. *KAREN CARDIEL OLEA 2209039*
-2. *JORGE RAMIRO CHAY KOYOC 2309052*
-3. *ANGELES ALEJANDRA CRUZ LEGORRETA 2309064*
-4. *DIEGO JESUS LORIA CAMPOS 2309140*
-5. *BRAD ROBLES GARCIA 2309198*
-6. *ELISABET ARELLY SULU VELA 2309212*
+1. *Karen Cardiel Olea 2209039*
+2. *Jorge Ramiro Chay Koyoc 2309052*
+3. *Angeles Alejandra Cruz Legorreta 2309064*
+4. *Diego Jesus Loria Campos 2309140*
+6. *Brad Robles Garcia 2309198*
+7. *Elisabet Arelly Sulu Vela 2309212*
 
 Institution: Universidad Politécnica de Yucatán (UPY)
 
