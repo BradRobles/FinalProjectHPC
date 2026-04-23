@@ -4,7 +4,7 @@ Segments and measures cell morphology across the **DIC-C2DH-HeLa** time-lapse mi
 
 The serial baseline processes frames sequentially. The parallel version distributes frames across workers using Python `multiprocessing`. A key adaptation was required for Docker on Apple Silicon: the multiprocessing context was explicitly set to `spawn` instead of `fork` to prevent deadlocks when multiple workers load the 1.15 GB Cellpose model concurrently.
 
-## ▷ Results
+## Results
 
 ### Performance
 

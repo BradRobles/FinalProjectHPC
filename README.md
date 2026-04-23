@@ -1,6 +1,8 @@
-# Evaluating Activity 3 — Parallel Programming Applications
+# <img src="https://slackmojis.com/emojis/52157-laptop/download" width="30"/> Evaluating Activity 3 — Parallel Programming Applications
 
-## ▷ Objective
+Benchmarks of serial and parallel computational strategies across four workloads — matrix multiplication, cell morphology analysis, forest fire simulation, and distributed clustering — using Python multiprocessing and OpenMPI.
+
+## Objective
 
 This assignment implements and evaluates serial and parallel computational strategies across four distinct workloads. The goal is to measure the real-world impact of parallelism on execution time, speedup, and scalability using two paradigms:
 
@@ -10,7 +12,7 @@ This assignment implements and evaluates serial and parallel computational strat
 Each exercise provides a serial baseline and one or more parallel implementations so both approaches can be directly compared under the same conditions.
 
 
-## ▷ Repository Structure
+## Repository Structure
 
 ```
 FinalProjectHPC/
@@ -73,7 +75,7 @@ FinalProjectHPC/
 
 
 
-## ▷ How to Compare Serial vs Parallel
+## How to Compare Serial vs Parallel
 
 Each exercise follows the same structure: a serial baseline file and one or more parallel implementations, all runnable through a single `run_all.py` that executes both versions and prints timing results side by side.
 
@@ -94,7 +96,7 @@ This runs the serial baseline first, then each parallel variant, and outputs exe
 
 
 
-## ▷ Requirements & Setup
+## Requirements & Setup
 
 **Required:** Docker Desktop
 
@@ -191,6 +193,6 @@ python exercise_4/run_all.py
 
 
 
-## ▷ Full Report
+## Full Report
 
 Methodology, analysis, and conclusions: `docs/report.pdf`

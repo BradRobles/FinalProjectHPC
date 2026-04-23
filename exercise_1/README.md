@@ -4,7 +4,7 @@ Implements and benchmarks serial and parallel strategies for dense matrix multip
 
 The serial baseline uses a naive O(n³) triple loop. Parallel variants partition the work using row, column, or block decomposition (Python `multiprocessing`), distributed computation via MPI, and the Strassen divide-and-conquer algorithm. A separate script (`sparse_experiments.py`) analyzes real-world sparse matrices in CSR format, examining load imbalance across row partitions.
 
-## ▷ Results
+## Results
 
 ### Baseline — Serial (dense, O(n³))
 

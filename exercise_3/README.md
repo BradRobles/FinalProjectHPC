@@ -8,7 +8,7 @@ The serial baseline iterates over the full grid sequentially. The parallel versi
 
 Results are visualized as a frame-by-frame animation and a final state map.
 
-## ▷ Model Parameters
+## Model Parameters
 
 | Parameter | Value |
 |---|---|
@@ -19,7 +19,7 @@ Results are visualized as a frame-by-frame animation and a final state map.
 | Data source | VIIRS\_NOAA20\_NRT — 768 hotspots |
 | Region | West Africa [18°N–28°N, 14°W–4°W] |
 
-## ▷ Results
+## Results
 
 | Implementation | Grid | Processes | Time (s) | Speedup |
 |---|---|---|---|---|
